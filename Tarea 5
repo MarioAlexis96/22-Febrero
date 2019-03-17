@@ -1,0 +1,75 @@
+var pelotas = [];
+
+function setup() {
+	createCanvas(400, 400);
+	for (var i = 0; i < 100; i++) {
+		pelotas[i] = new Pelota();
+	}
+}
+
+function draw() {
+	background(0);
+	for (var i = 0; i < 100; i++) {
+	pelotas[i].mostrar();
+	pelotas[i].mover();
+	if (pelotas[i].salir()) {
+		pelotas[i].rebotar();
+	}
+	}
+
+}
+
+%%Archivo Pelota.js
+class Pelota {
+	constructor() {
+		this.x1 = 20;
+		this.y1 = 20;
+		this.velx = random(0,10);
+		this.vely = random(0,10);
+		this.posx = random(399, 399);
+		this.posy = random(399, 399);
+		this.R = random(0, 255);
+		this.G = random(0, 255);
+		this.B = random(0, 255);
+	}
+
+	mostrar() {
+		ellipse(this.posx, this.posy, this.x1, this.y1);
+		fill(this.R, this.G, this.B);
+	}
+	mover() {
+		this.posx = this.posx + this.velx;
+		this.posy = this.posy + this.vely;
+
+	}
+	salir() {
+		var res;
+		if (this.posx < 0 || this.posx > width || this.posy < 0 || this.posy > height ) {
+			res = true
+		} else {
+			res = false
+		}
+		return res;
+	}
+	rebotar() {
+		this.velx = -this.velx + this.vely
+		this.vely = -this.vely + this.velx
+	}
+}
+
+%%Archivo INDEX
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body>
+    <script src="sketch.js"></script>
+    <script src="Pelota.js"></script>
+  </body>
+</html>
